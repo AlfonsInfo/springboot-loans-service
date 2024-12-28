@@ -42,7 +42,7 @@ public class    LoanController {
     ){
         loanService.updateLoans(loanNumber, requestLoansDto);
         return ResponseDto.<Void>builder()
-                .statusCode(HttpStatus.CREATED.value())
+                .statusCode(HttpStatus.OK.value())
                 .statusMsg(StatusMessage.SUCCESS_UPDATED_LOANS)
                 .build();
     }
@@ -53,7 +53,7 @@ public class    LoanController {
     ){
         return ResponseDto.<ResponseLoansDto>builder()
                 .data(loanService.getDetailLoans(loanNumber))
-                .statusCode(HttpStatus.CREATED.value())
+                .statusCode(HttpStatus.OK.value())
                 .statusMsg(StatusMessage.SUCCESS_GET_LOANS)
                 .build();
     }
@@ -64,7 +64,7 @@ public class    LoanController {
     ){
         loanService.deleteLoans(loanNumber);
         return ResponseDto.<Void>builder()
-                .statusCode(HttpStatus.CREATED.value())
+                .statusCode(HttpStatus.OK.value())
                 .statusMsg(StatusMessage.SUCCESS_DELETE_LOANS)
                 .build();
     }
