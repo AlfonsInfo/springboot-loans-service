@@ -2,6 +2,7 @@ package explore.spring.account.service;
 
 
 import explore.spring.account.dto.loans.RequestLoansDto;
+import explore.spring.account.dto.loans.ResponseLoansDto;
 import explore.spring.account.entity.Loans;
 import explore.spring.account.mapper.LoanMapper;
 import explore.spring.account.provider.LoanProvider;
@@ -29,15 +30,19 @@ public class LoanService {
     @Transactional
     public void updateLoans(String loanNumber, RequestLoansDto request){
         Loans loans = loanProvider.findByLoanNumber(loanNumber);
-        loans.setMobileNumber(request.getMobileNumber());
-        loans.setLoanNumber(request.getLoanNumber());
-        loans.setLoanType(request.getLoanType());
-        loans.setTotalLoan(request.getTotalLoan());
-        loans.setAmountPaid(request.getAmountPaid());
-        loans.setOutstandingAmount(request.getOutstandingAmount());
+        loanMapper.updateLoanFromDto(request,loans);
         loansRepository.save(loans);
     }
 
+    public ResponseLoansDto getDetailLoans(String loanNumber){
+        Loans loans = loanProvider.findByLoanNumber(loanNumber);
+        return loanMapper.mapToRespLoansDto(loans);
+    }
+
+    public void deleteLoans(String loanNumber){
+        Loans loans = loanProvider.findByLoanNumber(loanNumber);
+        loansRepository.delete(loans);
+    }
 
 
 }
