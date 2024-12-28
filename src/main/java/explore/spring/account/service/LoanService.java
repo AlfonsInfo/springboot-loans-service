@@ -30,12 +30,7 @@ public class LoanService {
     @Transactional
     public void updateLoans(String loanNumber, RequestLoansDto request){
         Loans loans = loanProvider.findByLoanNumber(loanNumber);
-        loans.setMobileNumber(request.getMobileNumber());
-        loans.setLoanNumber(request.getLoanNumber());
-        loans.setLoanType(request.getLoanType());
-        loans.setTotalLoan(request.getTotalLoan());
-        loans.setAmountPaid(request.getAmountPaid());
-        loans.setOutstandingAmount(request.getOutstandingAmount());
+        loanMapper.updateLoanFromDto(request,loans);
         loansRepository.save(loans);
     }
 

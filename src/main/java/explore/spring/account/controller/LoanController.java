@@ -47,6 +47,7 @@ public class    LoanController {
                 .build();
     }
 
+    @Operation(summary = "Get Detail Loans")
     @GetMapping("/{loanNumber}")
     ResponseDto<ResponseLoansDto> getDetailLoans(
             @PathVariable @LoansIsExist String loanNumber
@@ -58,6 +59,8 @@ public class    LoanController {
                 .build();
     }
 
+
+    @Operation(summary = "Delete Loans")
     @DeleteMapping("/{loanNumber}")
     ResponseDto<Void> deleteLoans(
             @PathVariable @LoansIsExist String loanNumber
