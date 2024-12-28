@@ -2,6 +2,7 @@ package explore.spring.account.service;
 
 
 import explore.spring.account.dto.loans.RequestLoansDto;
+import explore.spring.account.dto.loans.ResponseLoansDto;
 import explore.spring.account.entity.Loans;
 import explore.spring.account.mapper.LoanMapper;
 import explore.spring.account.provider.LoanProvider;
@@ -38,6 +39,15 @@ public class LoanService {
         loansRepository.save(loans);
     }
 
+    public ResponseLoansDto getDetailLoans(String loanNumber){
+        Loans loans = loanProvider.findByLoanNumber(loanNumber);
+        return loanMapper.mapToRespLoansDto(loans);
+    }
+
+    public void deleteLoans(String loanNumber){
+        Loans loans = loanProvider.findByLoanNumber(loanNumber);
+        loansRepository.delete(loans);
+    }
 
 
 }

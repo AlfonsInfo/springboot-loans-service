@@ -3,6 +3,7 @@ package explore.spring.account.controller;
 import explore.spring.account.constant.StatusMessage;
 import explore.spring.account.dto.ResponseDto;
 import explore.spring.account.dto.loans.RequestLoansDto;
+import explore.spring.account.dto.loans.ResponseLoansDto;
 import explore.spring.account.service.LoanService;
 import explore.spring.account.validation.annotation.LoansIsExist;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @Validated
 @Tag(name = "CRUD REST APIs for Loans", description = "CREATE, READ, UPDATE, DELETE")
-public class LoanController {
+public class    LoanController {
 
     private final LoanService loanService;
 
@@ -35,15 +36,38 @@ public class LoanController {
     @Operation(summary = "Update Loans")
     @PutMapping("/{loanNumber}")
     @ResponseStatus(HttpStatus.OK)
-    ResponseDto<Void> updateCustomer(
+    ResponseDto<Void> updateLoans(
             @PathVariable @LoansIsExist String loanNumber,
             @RequestBody RequestLoansDto requestLoansDto
     ){
         loanService.updateLoans(loanNumber, requestLoansDto);
         return ResponseDto.<Void>builder()
                 .statusCode(HttpStatus.CREATED.value())
-                .statusMsg(StatusMessage.SUCCESS_CREATE_LOANS)
+                .statusMsg(StatusMessage.SUCCESS_UPDATED_LOANS)
                 .build();
     }
+
+    @GetMapping("/{loanNumber}")
+    ResponseDto<ResponseLoansDto> getDetailLoans(
+            @PathVariable @LoansIsExist String loanNumber
+    ){
+        return ResponseDto.<ResponseLoansDto>builder()
+                .data(loanService.getDetailLoans(loanNumber))
+                .statusCode(HttpStatus.CREATED.value())
+                .statusMsg(StatusMessage.SUCCESS_GET_LOANS)
+                .build();
+    }
+
+    @DeleteMapping("/{loanNumber}")
+    ResponseDto<Void> deleteLoans(
+            @PathVariable @LoansIsExist String loanNumber
+    ){
+        loanService.deleteLoans(loanNumber);
+        return ResponseDto.<Void>builder()
+                .statusCode(HttpStatus.CREATED.value())
+                .statusMsg(StatusMessage.SUCCESS_DELETE_LOANS)
+                .build();
+    }
+
 
 }
